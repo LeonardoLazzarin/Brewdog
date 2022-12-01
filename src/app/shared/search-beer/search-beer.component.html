@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row justify-content-center">
+
+    <!--Search name or combination -->
+    <div class="col-12 col-md-6 col-xl-4 align-self-end">
+      <input type="text" id="inputNameCombination" class="form-control" placeholder="Filter by name or combination" [(ngModel)]="filter.nameCombination">
+    </div>
+
+    <!-- Alcohol content -->
+    <div class="col-12 col-md-6 col-xl-4">
+      <label for="alcoholContentFrom" class="col-form-label-sm">Alcohol content (From -> To)</label>
+      <div class="row">
+        <div class="col">
+          <input type="number" class="form-control" id="alcoholContentFrom" placeholder="From" [(ngModel)]="filter.alcohol.from">
+        </div>
+
+        <div class="col">
+          <input type="number" class="form-control" id="alcoholContentTo" placeholder="To" [(ngModel)]="filter.alcohol.to">
+        </div>
+      </div>
+    </div>
+
+    <!-- Button search -->
+    <div class="col-6 col-lg-4 col-xl-2 align-self-end">
+      <button class="btn btn-warning w-100" (click)="onFilterClick()" [disabled]="disableFilter">Filter</button>
+    </div>
+
+  </div>
+</div>

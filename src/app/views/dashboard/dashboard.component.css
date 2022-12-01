@@ -1,0 +1,24 @@
+.search-container {
+  padding: 20px 0;
+}
+
+.dashboard {
+  padding: 20px 0;
+}
+
+.paging {
+  max-width: 1300px;
+  padding: 20px;
+}
+
+.paging .btn {
+  margin-right: 10px;
+}
+
+.paging .list {
+  padding: 20px 0;
+}
+
+.paging .list-item {
+  padding: 2px 0;
+}

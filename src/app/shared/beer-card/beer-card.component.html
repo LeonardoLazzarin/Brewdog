@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+
+    <!-- No beer passed -->
+    <ng-container *ngIf="beer == null">
+      <h5 style="color: red"> No beer passed to card </h5>
+    </ng-container>
+
+    <!-- Show beer details -->
+    <ng-container *ngIf="beer != null">
+      <div class="row">
+
+        <!-- Name -->
+        <div class="col-8 col-md-10">
+          <h6>{{beer.name}}</h6>
+        </div>
+
+        <!-- Icon and alcohol content -->
+        <div class="col-2 col-md-1 d-flex justify-content-end">
+          <p>{{beer.abv}}%</p>
+        </div>
+        <div class="col-2 col-md-1 d-flex justify-content-end">
+          <i class="bi bi-star"></i>
+        </div>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>

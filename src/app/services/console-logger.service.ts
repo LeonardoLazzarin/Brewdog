@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 
 export interface ILoggerService {
-  info(value: any, ...rest: any[]): void;
-  log(value: any, ...rest: any[]): void;
-  warn(value: any, ...rest: any[]): void;
-  error(value: any, ...rest: any[]): void;
+  info(message: any): void;
+  log(message: any): void;
+  warn(message: any): void;
+  error(message: any): void;
 }
 
 @Injectable({
@@ -13,24 +13,28 @@ export interface ILoggerService {
 })
 export class ConsoleLoggerService implements ILoggerService {
 
-  info(value: any, ...rest: any[]): void {
-    if (!environment.production)
-      console.info(value, rest);
+  info(message: any): void {
+    if (!environment.production) {
+      console.info(message);
+    }
   }
 
-  log(value: any, ...rest: any[]): void {
-    if (!environment.production)
-      console.log(value, rest);
+  log(message: any): void {
+    if (!environment.production) {
+      console.log(message);
+    }
   }
 
-  warn(value: any, ...rest: any[]): void {
-    if (!environment.production)
-      console.warn(value, rest);
+  warn(message: any): void {
+    if (!environment.production) {
+      console.warn(message);
+    }
   }
 
-  error(value: any, ...rest: any[]): void {
-    if (!environment.production)
-      console.error(value, rest);
+  error(message: any): void {
+    if (!environment.production) {
+      console.error(message);
+    }
   }
 }
 

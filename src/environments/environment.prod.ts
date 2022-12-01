@@ -7,10 +7,6 @@ export const environment = {
         key: "Content-Type",
         value: "application/json"
       },
-      {
-        key: "timeout",
-        value: 30000
-      },
     ],
     services: {
       beers: "beers",

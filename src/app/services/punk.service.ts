@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {RestService} from "./rest.service";
 import {HttpClient} from "@angular/common/http";
 import {ConsoleLoggerService} from "./console-logger.service";
-import {catchError, Observable} from "rxjs";
+import {Observable} from "rxjs";
+import {catchError} from 'rxjs/operators';
 import {Beer} from "../modules/beer";
 
 @Injectable({
@@ -29,6 +30,7 @@ export class PunkService extends RestService {
       return null;
     }
 
+    this.logger.info(request.url);
     return this.http
       .get<Beer[]>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));

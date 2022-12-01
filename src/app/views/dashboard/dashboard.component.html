@@ -1,1 +1,59 @@
-<p>dashboard works!</p>
+<!--Search beer-->
+<div class="w-100 bg-dark search-container">
+  <app-search-beer [disableFilter]="isLoading || error != null" (onFilter)="onFilter($event)"></app-search-beer>
+</div>
+
+<!--Body of page -->
+<div class="dashboard d-flex justify-content-center">
+  <!-- Loading -->
+  <ng-container *ngIf="isLoading">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Error -->
+  <ng-container *ngIf="error != null && !isLoading">
+    <div class="alert alert-danger" role="alert">
+      Error: {{error}}
+    </div>
+  </ng-container>
+
+  <!-- List of beers -->
+  <ng-container *ngIf="error == null && !isLoading">
+    <div class="container paging">
+      <div class="row align-items-center">
+
+        <!--Paging Top-->
+        <div class="col-6 text-align-left">
+          <h5>{{beers.length}} beers</h5>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-sm btn-warning float-end">Next</button>
+          <button class="btn btn-sm btn-warning float-end">Prev</button>
+        </div>
+
+        <!-- List of beers -->
+        <div class="list">
+          <ng-container *ngFor="let beer of beers">
+            <div class="list-item">
+              <app-beer-card [beer]="beer"></app-beer-card>
+            </div>
+          </ng-container>
+        </div>
+
+        <!--Paging Bottom-->
+        <div class="col-6 text-align-left">
+          <h5>Page: {{page}}</h5>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-sm btn-warning float-end">Next</button>
+          <button class="btn btn-sm btn-warning float-end">Prev</button>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+</div>

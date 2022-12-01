@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ConsoleLoggerService} from "./console-logger.service";
-import {of} from "rxjs";
+import {Observable, of} from "rxjs";
 
 export interface RestRequest {
   url: string,
@@ -33,7 +33,7 @@ export class RestService {
   get itemPerPage() {
     const items = environment.punkApi.paging.item;
     if (items == null) {
-      console.error("Invalid item per page for %s", this.restServiceName);
+      console.error('Invalid item per page for' + this.restServiceName);
     }
     return items;
   }
@@ -52,7 +52,7 @@ export class RestService {
   ): RestRequest | null {
     const serviceConf: any = environment[this.restServiceName];
     if (serviceConf == null) {
-      this.restLogger.error('Rest service configuration not found for %s', this.restServiceName);
+      this.restLogger.error('Rest service configuration not found for' + this.restServiceName);
       return null;
     }
 
@@ -78,8 +78,8 @@ export class RestService {
     // Add headers
     let httpHeaders = new HttpHeaders();
     if (serviceConf.headers != null && serviceConf.headers.length > 0) {
-      serviceConf.headers.forEach(function(header: {key: string, value: string}) {
-        httpHeaders = httpHeaders.append(header.key, header.value);
+      serviceConf.headers.forEach(function(header: any) {
+        httpHeaders = httpHeaders.set(header.key, header.value);
       });
     }
 
@@ -108,25 +108,25 @@ export class RestService {
 
     // Check if the service name passed is valid
     if (serviceConf.services == null) {
-      this.restLogger.error('No service found for %s', this.restServiceName);
+      this.restLogger.error('No service found for' + this.restServiceName);
       return null;
     }
     if (serviceConf.services[serviceName] == null) {
-      this.restLogger.error('Service name invalid for %s', this.restServiceName);
+      this.restLogger.error('Service name invalid for' + this.restServiceName);
       return null;
     }
 
     // Create url
     if (serviceConf.baseAddress == null) {
-      this.restLogger.error('Base url not found for %s', this.restServiceName);
+      this.restLogger.error('Base url not found for' + this.restServiceName);
       return null;
     }
 
     return serviceConf.baseAddress + serviceConf.services[serviceName];
   }
 
-  handleError(error: any) {
-    this.restLogger.error("HTTP error: ", error);
+  handleError(error: any): Observable<any> {
+    this.restLogger.error('HTTP error: ' + error);
     return of(error);
   }
 }

@@ -1,0 +1,9 @@
+@media(max-width: 1200px) {
+  .btn {
+    margin-top: 20px;
+  }
+}
+
+.col-form-label-sm {
+  color: gray;
+}
