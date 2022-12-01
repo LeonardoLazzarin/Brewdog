@@ -14,7 +14,7 @@ export class PunkService extends RestService {
     private http: HttpClient,
     private logger: ConsoleLoggerService
   ) {
-    super(logger, 'punkApi');
+    super(logger);
   }
 
   getBeerPerPage(page: number): Observable<Beer[]> | null {

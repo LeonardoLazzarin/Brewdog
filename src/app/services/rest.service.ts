@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ConsoleLoggerService} from "./console-logger.service";
 import {of} from "rxjs";
@@ -19,10 +19,13 @@ export interface RestRequestOptions {
 })
 export class RestService {
 
+  restServiceName: 'punkApi';
+
   constructor(
-    private restLogger: ConsoleLoggerService,
-    private restServiceName: 'punkApi'
-  ) { }
+    private restLogger: ConsoleLoggerService
+  ) {
+    this.restServiceName = 'punkApi';
+  }
 
   /**
    * The number of item for page

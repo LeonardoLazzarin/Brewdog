@@ -9,6 +9,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {SharedModule} from "./shared/shared.module";
 import { BeerDetailsComponent } from './views/beer-details/beer-details.component';
 import { FavoritesComponent } from './views/favorites/favorites.component';
+import {RestService} from "./services/rest.service";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FavoritesComponent } from './views/favorites/favorites.component';
     SharedModule
   ],
   providers: [
+    RestService,
     PunkService
   ],
   bootstrap: [AppComponent]

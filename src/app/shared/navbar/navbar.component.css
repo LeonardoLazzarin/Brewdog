@@ -1,0 +1,15 @@
+@media (max-width: 991px) {
+  .nav-item {
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-item {
+    margin-left: 10px;
+  }
+}
+
+.navbar-brand{
+  color: #ffc107;
+}
