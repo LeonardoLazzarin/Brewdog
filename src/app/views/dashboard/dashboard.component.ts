@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FilterBeer} from "../../shared/search-beer/search-beer.component";
 import {ConsoleLoggerService} from "../../services/console-logger.service";
 import {Subscription} from "rxjs";
 import {Beer} from "../../modules/beer";
+import {FilterBeer} from "../../shared/search-beer/search-beer.component";
 import {PunkService} from "../../services/punk.service";
 
 @Component({
@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   beers: Beer[];
   page: number;
+  filter: FilterBeer;
 
   constructor(
     private logger: ConsoleLoggerService,
@@ -30,11 +31,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.beers = [];
     this.error = null;
     this.page = 1;
+    this.filter = { nameCombination: "", alcohol: {from: null, to: null}};
   }
 
 
   ngOnInit(): void {
     this.page = 1;
+    this.filter = { nameCombination: "", alcohol: {from: null, to: null}};
     this.getBeersByPage();
   }
 
@@ -42,8 +45,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  /**
+   * Request for get all beers from api
+   */
   getBeersByPage() {
-    const request = this.punk.getBeerPerPage(this.page);
+    // Get the request
+    const request = this.punk.getBeersWithFilter(
+      this.page,
+      this.filter.nameCombination,
+      this.filter.alcohol.from,
+      this.filter.alcohol.to
+    );
     if (request == null) {
       return;
     }
@@ -52,16 +64,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.error = null;
     this.subscription = request.subscribe({
       next: (res) => {
-        this.logger.log(res);
-        this.beers = res;
+        if (Array.isArray(res)){
+          this.beers = res;
+        }
       },
-      error: (err) => this.error = err,
+      error: (err) => this.showError(err),
       complete: () => this.isLoading = false
     })
   }
 
+  /**
+   * Show error on view
+   * @param error Error to show
+   */
+  showError(error: string) {
+    this.error = error;
+    const interval = setInterval(() => {
+      this.error = null;
+      clearInterval(interval);
+    }, 5000);
+  }
+
   onFilter(filter: FilterBeer) {
-    this.logger.log(filter);
+    this.filter = filter;
+    // Replace space with underscore
+    this.filter.nameCombination = this.filter.nameCombination.replace(' ', '_');
+
+    this.page = 1;
+    this.getBeersByPage();
   }
 
 }

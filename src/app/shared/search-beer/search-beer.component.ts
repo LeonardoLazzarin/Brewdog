@@ -3,8 +3,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export interface FilterBeer {
   nameCombination: string,
   alcohol: {
-    from: number,
-    to: number
+    from: number | null,
+    to: number | null
   }
 }
 
@@ -19,6 +19,8 @@ export class SearchBeerComponent implements OnInit {
   disableFilter: boolean = false
 
   @Output()
+  onErrorInput = new EventEmitter<string>();
+  @Output()
   onFilter = new EventEmitter<FilterBeer>();
 
   filter: FilterBeer;
@@ -32,7 +34,6 @@ export class SearchBeerComponent implements OnInit {
       }
     }
   }
-
 
   ngOnInit(): void {
     this.resetFilter();
@@ -49,7 +50,46 @@ export class SearchBeerComponent implements OnInit {
   }
 
   onFilterClick() {
+    const err = this.getErrorFilter();
+    if (err != null) {
+      this.onErrorInput.emit(err);
+      return;
+    }
+
+    // Remove start and end space
+    this.filter.nameCombination = this.filter.nameCombination.trimStart().trimEnd();
     this.onFilter.emit(this.filter);
+  }
+
+  /**
+   * Check if the key pressed is a number with a regex. If it isn't prevent input
+   * @param event Keyboard event
+   */
+  onlyNumberInput(event: KeyboardEvent) {
+    const pattern = /^[0-9]*$/;
+    const key = event.keyCode || event.charCode;
+    const inputChar = String.fromCharCode(key);
+    if (!pattern.test(inputChar) && key !== 8 && key !== 46) {
+      // Invalid char
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Check if the filter is valid
+   * @return The error found otherwise null
+   */
+  getErrorFilter(): string | null {
+    if (this.filter.nameCombination == null) {
+      return 'You must insert a valida name or combination';
+    }
+    if (
+      this.filter.alcohol.from != null && this.filter.alcohol.to != null &&
+      this.filter.alcohol.from > this.filter.alcohol.to
+    ) {
+      return 'The "From" content must be equal or minor of "To"';
+    }
+    return null;
   }
 
 }
