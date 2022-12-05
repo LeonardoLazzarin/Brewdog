@@ -4,7 +4,7 @@
 </div>
 
 <!--Body of page -->
-<div class="dashboard d-flex justify-content-center">
+<div class="dashboard justify-content-center">
   <!-- Loading -->
   <ng-container *ngIf="isLoading">
     <div class="d-flex justify-content-center">
@@ -27,27 +27,28 @@
     <!-- List of beers -->
     <ng-container *ngIf="!isLoading">
       <div class="paging">
-        <div class="row align-items-center">
-
-          <!--Paging Top-->
+        <!--Paging Top-->
+        <div class="row">
           <div class="col-6 text-align-left">
             <h5>{{beers.length}} beers</h5>
           </div>
-          <div class="col-6">
+          <div class="col-6 justify-content-end">
             <button class="btn btn-sm btn-warning float-end">Next</button>
             <button class="btn btn-sm btn-warning float-end">Prev</button>
           </div>
+        </div>
 
-          <!-- List of beers -->
-          <div class="list">
-            <ng-container *ngFor="let beer of beers">
-              <div class="list-item">
-                <app-beer-card [beer]="beer"></app-beer-card>
-              </div>
-            </ng-container>
-          </div>
+        <!-- List of beers -->
+        <div class="list">
+          <ng-container *ngFor="let beer of beers">
+            <div class="list-item">
+              <app-beer-card [beer]="beer"></app-beer-card>
+            </div>
+          </ng-container>
+        </div>
 
-          <!--Paging Bottom-->
+        <!--Paging Bottom-->
+        <div class="row">
           <div class="col-6 text-align-left">
             <h5>Page: {{page}}</h5>
           </div>
@@ -55,7 +56,6 @@
             <button class="btn btn-sm btn-warning float-end">Next</button>
             <button class="btn btn-sm btn-warning float-end">Prev</button>
           </div>
-
         </div>
       </div>
     </ng-container>

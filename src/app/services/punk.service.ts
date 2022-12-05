@@ -5,6 +5,7 @@ import {ConsoleLoggerService} from "./console-logger.service";
 import {Observable} from "rxjs";
 import {catchError} from 'rxjs/operators';
 import {Beer} from "../modules/beer";
+import {FilterBeer} from "../modules/beerFilter";
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +46,9 @@ export class PunkService extends RestService {
   /**
    * Request for get beers by page with filter
    * @param page Page
-   * @param nameCombination The name and combination filed
-   * @param abvFrom From alcohol component
-   * @param abvTo To alcohol component
+   * @param filter Filter for the request
    */
-  getBeersWithFilter(page: number, nameCombination: string, abvFrom: number | null, abvTo: number | null){
+  getBeersWithFilter(page: number, filter: FilterBeer): Observable<Beer[]> | null {
     if(super.itemPerPage == null) {
       return null;
     }
@@ -59,15 +58,17 @@ export class PunkService extends RestService {
       per_page: super.itemPerPage,
       page: page,
     };
-    if (nameCombination) {
-      params['food'] = nameCombination;
-      params['beer_name'] = nameCombination;
+    if (filter.beerName) {
+      params['beer_name'] = filter.beerName;
     }
-    if (abvFrom !== null) {
-      params['abv_gt'] = abvFrom;
+    if (filter.foodCombination) {
+      params['food'] = filter.foodCombination;
     }
-    if (abvTo !== null) {
-      params['abv_lt'] = abvTo;
+    if (filter.alcohol.from !== null && filter.alcohol.from > 0) {
+      params['abv_gt'] = filter.alcohol.from;
+    }
+    if (filter.alcohol.to !== null && filter.alcohol.to > 0) {
+      params['abv_lt'] = filter.alcohol.to;
     }
 
     // Create request data

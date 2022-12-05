@@ -1,12 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-
-export interface FilterBeer {
-  nameCombination: string,
-  alcohol: {
-    from: number | null,
-    to: number | null
-  }
-}
+import {defaultFilterBeer, FilterBeer} from "../../modules/beerFilter";
 
 @Component({
   selector: 'app-search-beer',
@@ -26,27 +19,11 @@ export class SearchBeerComponent implements OnInit {
   filter: FilterBeer;
 
   constructor() {
-    this.filter = {
-      nameCombination: "",
-      alcohol: {
-        from: 0,
-        to: 0
-      }
-    }
+    this.filter = defaultFilterBeer();
   }
 
   ngOnInit(): void {
-    this.resetFilter();
-  }
-
-  resetFilter() {
-    this.filter = {
-      nameCombination: "",
-      alcohol: {
-        from: 0,
-        to: 0
-      }
-    }
+    this.filter = defaultFilterBeer();
   }
 
   onFilterClick() {
@@ -56,8 +33,10 @@ export class SearchBeerComponent implements OnInit {
       return;
     }
 
-    // Remove start and end space
-    this.filter.nameCombination = this.filter.nameCombination.trimStart().trimEnd();
+    // Remove start and end space for beer name and food combination
+    this.filter.beerName = this.filter.beerName.trimStart().trimEnd();
+    this.filter.foodCombination = this.filter.foodCombination.trimStart().trimEnd();
+
     this.onFilter.emit(this.filter);
   }
 
@@ -80,14 +59,17 @@ export class SearchBeerComponent implements OnInit {
    * @return The error found otherwise null
    */
   getErrorFilter(): string | null {
-    if (this.filter.nameCombination == null) {
-      return 'You must insert a valida name or combination';
+    if (this.filter.beerName == null) {
+      return 'You must insert a valid beer name';
+    }
+    if (this.filter.foodCombination == null) {
+      return 'You must insert a valid food combination';
     }
     if (
       this.filter.alcohol.from != null && this.filter.alcohol.to != null &&
       this.filter.alcohol.from > this.filter.alcohol.to
     ) {
-      return 'The "From" content must be equal or minor of "To"';
+      return 'You must insert a valid range for alcohol component';
     }
     return null;
   }

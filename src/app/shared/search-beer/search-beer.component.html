@@ -3,7 +3,17 @@
 
     <!--Search name or combination -->
     <div class="col-12 col-md-6 col-xl-4 align-self-end">
-      <input type="text" id="inputNameCombination" class="form-control" placeholder="Filter by name or combination" [(ngModel)]="filter.nameCombination">
+      <div class="row">
+        <div class="col">
+          <label for="beerName" class="col-form-label-sm">Beer name</label>
+          <input type="text" class="form-control" id="beerName" placeholder="Name" [(ngModel)]="filter.beerName">
+        </div>
+
+        <div class="col">
+          <label for="foodCombination" class="col-form-label-sm">Food combination</label>
+          <input type="text" class="form-control" id="foodCombination" placeholder="Combination" [(ngModel)]="filter.foodCombination">
+        </div>
+      </div>
     </div>
 
     <!-- Alcohol content -->
@@ -12,11 +22,12 @@
       <div class="row">
         <div class="col">
           <input type="number" class="form-control" id="alcoholContentFrom" placeholder="From" [(ngModel)]="filter.alcohol.from"
-            (keypress)="onlyNumberInput($event)">
+                  (keypress)="onlyNumberInput($event)">
         </div>
 
         <div class="col">
-          <input type="number" class="form-control" id="alcoholContentTo" placeholder="To" [(ngModel)]="filter.alcohol.to">
+          <input type="number" class="form-control" id="alcoholContentTo" placeholder="To" [(ngModel)]="filter.alcohol.to"
+                 (keypress)="onlyNumberInput($event)">
         </div>
       </div>
     </div>

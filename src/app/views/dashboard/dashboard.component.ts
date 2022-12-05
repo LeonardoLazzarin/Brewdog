@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConsoleLoggerService} from "../../services/console-logger.service";
 import {Subscription} from "rxjs";
 import {Beer} from "../../modules/beer";
-import {FilterBeer} from "../../shared/search-beer/search-beer.component";
 import {PunkService} from "../../services/punk.service";
+import {defaultFilterBeer, FilterBeer} from "../../modules/beerFilter";
 
 @Component({
   selector: 'app-dashboard',
@@ -31,13 +31,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.beers = [];
     this.error = null;
     this.page = 1;
-    this.filter = { nameCombination: "", alcohol: {from: null, to: null}};
+    this.filter = defaultFilterBeer();
   }
 
 
   ngOnInit(): void {
     this.page = 1;
-    this.filter = { nameCombination: "", alcohol: {from: null, to: null}};
+    this.filter = defaultFilterBeer();
     this.getBeersByPage();
   }
 
@@ -50,12 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   getBeersByPage() {
     // Get the request
-    const request = this.punk.getBeersWithFilter(
-      this.page,
-      this.filter.nameCombination,
-      this.filter.alcohol.from,
-      this.filter.alcohol.to
-    );
+    const request = this.punk.getBeersWithFilter(this.page, this.filter);
     if (request == null) {
       return;
     }
@@ -87,8 +82,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onFilter(filter: FilterBeer) {
     this.filter = filter;
+
     // Replace space with underscore
-    this.filter.nameCombination = this.filter.nameCombination.replace(' ', '_');
+    this.filter.beerName = this.filter.beerName.replace(' ', '_');
+    this.filter.foodCombination = this.filter.foodCombination.replace(' ', '_');
 
     this.page = 1;
     this.getBeersByPage();
