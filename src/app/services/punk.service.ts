@@ -19,6 +19,17 @@ export class PunkService extends RestService {
     super(logger);
   }
 
+  get allFavoriteBeers(): Beer[] {
+    const allBeers = Object.keys(sessionStorage).map(key => {
+      const item = sessionStorage.getItem(key);
+      return {
+        id: Number(key),
+        name: item
+      }
+    });
+    return allBeers.sort((a, b) => a.id - b.id);
+  }
+
   /**
    * Request for get beers by page
    * @param page Page
@@ -81,6 +92,31 @@ export class PunkService extends RestService {
     return this.http
       .get<Beer[]>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));
+  }
+
+  /**
+   * Check if the beer is added to the favorites
+   * @param beer The beer
+   * @return The result of check
+   */
+  isFavorite(beer: Beer): boolean {
+    return sessionStorage.getItem(beer.id.toString()) === beer.name;
+  }
+
+  /**
+   * Add beers to favorite
+   * @param beers Beers to add
+   */
+  addFavorite(...beers: Beer[]) {
+    beers.forEach(b => sessionStorage.setItem(b.id.toString(), b.name ?? 'No name found'));
+  }
+
+  /**
+   * Remove beers to favorite
+   * @param beers Beers to remove
+   */
+  removeFavorite(...beers: Beer[]) {
+    beers.forEach(b => sessionStorage.removeItem(b.id.toString()));
   }
 
 }

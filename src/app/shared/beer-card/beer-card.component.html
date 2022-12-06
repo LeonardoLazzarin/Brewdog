@@ -11,16 +11,16 @@
       <div class="row">
 
         <!-- Name -->
-        <div class="col-8 col-md-10">
+        <div class="col-8 col-md-10" style="cursor:pointer;" (click)="navigateToBeerDetail()">
           <h6>{{beer.name}}</h6>
         </div>
 
         <!-- Icon and alcohol content -->
-        <div class="col-2 col-md-1 d-flex justify-content-end">
+        <div class="col-2 col-md-1 d-flex justify-content-end" style="cursor:pointer;" (click)="navigateToBeerDetail()">
           <p>{{beer.abv}}%</p>
         </div>
         <div class="col-2 col-md-1 d-flex justify-content-end">
-          <i class="bi bi-star"></i>
+          <i class="bi" [ngClass]="isFavorite ? 'bi-star-fill' : 'bi-star'" (click)="setFavorite()"></i>
         </div>
 
       </div>

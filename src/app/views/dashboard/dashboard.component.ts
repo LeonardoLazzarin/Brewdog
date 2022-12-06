@@ -46,6 +46,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Visibility of button previous page
+   */
+  get prevButtonVisible(): boolean {
+    return this.page > 1;
+  }
+
+  /**
+   * Visibility of button next page
+   */
+  get nextButtonVisible(): boolean {
+    return this.beers.length == this.punk.itemPerPage;
+  }
+
+  /**
    * Request for get all beers from api
    */
   getBeersByPage() {
@@ -78,6 +92,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.error = null;
       clearInterval(interval);
     }, 5000);
+  }
+
+  /**
+   * Action for get information of previous page
+   */
+  prevPage(){
+    if (!this.prevButtonVisible) {
+      return;
+    }
+
+    this.page -= 1;
+    this.getBeersByPage();
+  }
+
+  /**
+   * Action for get information of next page
+   */
+  nextPage() {
+    if (!this.nextButtonVisible) {
+      return;
+    }
+
+    this.page += 1;
+    this.getBeersByPage();
   }
 
   onFilter(filter: FilterBeer) {

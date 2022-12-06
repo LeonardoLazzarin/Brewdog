@@ -1,1 +1,25 @@
-<p>favorites works!</p>
+
+<!--Body of page -->
+<div class="dashboard justify-content-center">
+  <div class="container">
+
+    <!-- List of beers -->
+    <div class="paging">
+      <!--Paging Top-->
+      <div class="row">
+        <div class="col-6 text-align-left">
+          <h5>{{favorites.length}} beers</h5>
+        </div>
+      </div>
+
+      <!-- List of beers -->
+      <div class="list">
+        <ng-container *ngFor="let beer of favorites">
+          <div class="list-item">
+            <app-beer-card [beer]="beer" (onRemoveFavorite)="onRemoveFavorite($event)"></app-beer-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

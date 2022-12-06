@@ -37,7 +37,15 @@ export class SearchBeerComponent implements OnInit {
     this.filter.beerName = this.filter.beerName.trimStart().trimEnd();
     this.filter.foodCombination = this.filter.foodCombination.trimStart().trimEnd();
 
-    this.onFilter.emit(this.filter);
+    // Emit a copy of object
+    this.onFilter.emit({
+      beerName: this.filter.beerName,
+      foodCombination: this.filter.foodCombination,
+      alcohol: {
+        from: this.filter.alcohol.from,
+        to: this.filter.alcohol.to
+      }
+    });
   }
 
   /**

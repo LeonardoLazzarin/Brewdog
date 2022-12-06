@@ -4,7 +4,7 @@
 </div>
 
 <!--Body of page -->
-<div class="dashboard justify-content-center">
+<div class="padding-vertical justify-content-center">
   <!-- Loading -->
   <ng-container *ngIf="isLoading">
     <div class="d-flex justify-content-center">
@@ -33,13 +33,13 @@
             <h5>{{beers.length}} beers</h5>
           </div>
           <div class="col-6 justify-content-end">
-            <button class="btn btn-sm btn-warning float-end">Next</button>
-            <button class="btn btn-sm btn-warning float-end">Prev</button>
+            <button class="btn btn-sm btn-warning float-end" [disabled]="!nextButtonVisible" (click)="nextPage()">Next</button>
+            <button class="btn btn-sm btn-warning float-end" [disabled]="!prevButtonVisible" (click)="prevPage()">Prev</button>
           </div>
         </div>
 
         <!-- List of beers -->
-        <div class="list">
+        <div class="padding-vertical">
           <ng-container *ngFor="let beer of beers">
             <div class="list-item">
               <app-beer-card [beer]="beer"></app-beer-card>
@@ -53,8 +53,8 @@
             <h5>Page: {{page}}</h5>
           </div>
           <div class="col-6">
-            <button class="btn btn-sm btn-warning float-end">Next</button>
-            <button class="btn btn-sm btn-warning float-end">Prev</button>
+            <button class="btn btn-sm btn-warning float-end" [disabled]="!nextButtonVisible" (click)="nextPage()">Next</button>
+            <button class="btn btn-sm btn-warning float-end" [disabled]="!prevButtonVisible" (click)="prevPage()">Prev</button>
           </div>
         </div>
       </div>
