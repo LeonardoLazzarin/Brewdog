@@ -17,5 +17,47 @@
 
 <!--Beer info-->
 <ng-container *ngIf="!isLoading && error == null">
-  <p>Show beer info</p>
+  <div class="bg-dark info-header">
+
+    <!--Back button-->
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-sm btn-outline-warning" (click)="back()">
+          <i class="bi bi-arrow-left"></i> &nbsp;Back&nbsp;
+        </button>
+      </div>
+    </div>
+
+    <!--HEADER info with valid beer-->
+    <ng-container *ngIf="beer != null">
+      <div class="row justify-content-center">
+        <!--Favorite star-->
+        <div class="col-md-1 col-xs-2 text-warning">
+          <i class="bi favorite-star"
+             [ngClass]="isFavorite() ? 'bi-star-fill' : 'bi-star'"
+             (click)="onFavoriteClick()"></i>
+        </div>
+
+        <div class="col-md-5 col-xs-8 header-name">
+          <h3 class="text-warning">{{ beer.name }}</h3>
+          <h5 class="text-secondary">{{ beer.tagline }}</h5>
+        </div>
+
+        <div class="col-md-3 col-xs-12 image-container">
+          <!--Background-->
+          <div></div>
+          <img src="{{ beer.image_url }}" alt="Beer image not found" width="100px" height="200px"/>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <!--Invalid beer-->
+  <ng-container *ngIf="beer == null">
+    <div class="text-center" style="margin-top: 10px">
+      <h3>No beer info found</h3>
+    </div>
+  </ng-container>
+
 </ng-container>

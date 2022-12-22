@@ -101,7 +101,7 @@ export class PunkService extends RestService {
    * Request for get beer info by id
    * @param id Id of beer
    */
-  getBeerInfo(id: number): Observable<Beer> | null {
+  getBeerInfo(id: number): Observable<Beer[]> | null {
     // Create request data
     const request = this.getRestRequest('beers', [id.toString()]);
     if (request == null) {
@@ -111,14 +111,14 @@ export class PunkService extends RestService {
     // Send request
     this.logger.log(request.url);
     return this.httpClient
-      .get<Beer>(request.url, request.options)
+      .get<Beer[]>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));
   }
 
   /**
    * Request for get a random beer info
    */
-  getRandomBeerInfo(): Observable<Beer> | null {
+  getRandomBeerInfo(): Observable<Beer[]> | null {
     // Create request data
     const request = this.getRestRequest('beerRandom');
     if (request == null) {
@@ -128,7 +128,7 @@ export class PunkService extends RestService {
     // Send request
     this.logger.log(request.url);
     return this.httpClient
-      .get<Beer>(request.url, request.options)
+      .get<Beer[]>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));
   }
 
@@ -138,7 +138,7 @@ export class PunkService extends RestService {
    * @return The result of check
    */
   isFavorite(beer: Beer): boolean {
-    return sessionStorage.getItem(beer.id.toString()) === beer.name;
+    return sessionStorage.getItem(beer.id.toString()) != null;
   }
 
   /**

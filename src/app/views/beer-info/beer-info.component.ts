@@ -4,6 +4,7 @@ import {ConsoleLoggerService} from "../../services/console-logger.service";
 import {Subject, takeUntil} from "rxjs";
 import {Beer} from "../../modules/beer";
 import {ActivatedRoute} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-beer-info',
@@ -23,6 +24,7 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private location: Location,
     private punk: PunkService,
     private logger: ConsoleLoggerService
   ) {
@@ -94,7 +96,9 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscribe))
       .subscribe({
         next: (res) => {
-          this.beer = res;
+          if (res.length > 0) {
+            this.beer = res[0];
+          }
           this.logger.info(this.beer);
         },
         error: (err) => this.showError(err),
@@ -112,6 +116,39 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
       this.error = null;
       clearInterval(interval);
     }, 5000);
+  }
+
+  /**
+   * Return on previous page
+   */
+  back() {
+    this.location.back();
+  }
+
+  /**
+   * Check if the beer is on favorites list
+   */
+  isFavorite(): boolean {
+    if (this.beer == null) {
+      return false;
+    }
+    return this.punk.isFavorite(this.beer);
+  }
+
+  /**
+   * Action called when favorite star is clicked
+   */
+  onFavoriteClick() {
+    if (this.beer == null) {
+      return;
+    }
+    if (this.isFavorite()) {
+      // Remove favorite
+      this.punk.removeFavorite(this.beer);
+    } else {
+      // Add favorite
+      this.punk.addFavorite(this.beer);
+    }
   }
 
 }
