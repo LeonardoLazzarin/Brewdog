@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Beer} from "../../modules/beer";
-import {ConsoleLoggerService} from "../../services/console-logger.service";
 import {PunkService} from "../../services/punk.service";
 
 @Component({
@@ -13,8 +12,7 @@ export class FavoritesComponent implements OnInit {
   public favorites: Beer[];
 
   constructor(
-    private punk: PunkService,
-    private logger: ConsoleLoggerService
+    private punk: PunkService
   ) {
     this.favorites = [];
   }
@@ -31,7 +29,7 @@ export class FavoritesComponent implements OnInit {
     const index = this.favorites.findIndex(f => f.id === beer.id);
     if (index > -1) {
       // Remove it from array
-      this.favorites = this.favorites.splice(index, 1);
+      this.favorites.splice(index, 1);
     }
   }
 

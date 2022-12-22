@@ -12,7 +12,7 @@ import { BeerCardComponent } from './beer-card/beer-card.component';
   declarations: [
     NavbarComponent,
     SearchBeerComponent,
-    BeerCardComponent
+    BeerCardComponent,
   ],
     exports: [
         NavbarComponent,

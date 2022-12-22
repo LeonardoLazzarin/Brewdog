@@ -7,7 +7,7 @@ import {PunkService} from "./services/punk.service";
 import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {SharedModule} from "./shared/shared.module";
-import { BeerDetailsComponent } from './views/beer-details/beer-details.component';
+import { BeerInfoComponent } from './views/beer-info/beer-info.component';
 import { FavoritesComponent } from './views/favorites/favorites.component';
 import {RestService} from "./services/rest.service";
 
@@ -15,7 +15,7 @@ import {RestService} from "./services/rest.service";
   declarations: [
     AppComponent,
     DashboardComponent,
-    BeerDetailsComponent,
+    BeerInfoComponent,
     FavoritesComponent
   ],
   imports: [

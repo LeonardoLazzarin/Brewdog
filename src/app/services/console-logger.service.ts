@@ -26,15 +26,11 @@ export class ConsoleLoggerService implements ILoggerService {
   }
 
   warn(message: any): void {
-    if (!environment.production) {
-      console.warn(message);
-    }
+    console.warn(message);
   }
 
   error(message: any): void {
-    if (!environment.production) {
-      console.error(message);
-    }
+    console.error(message);
   }
 }
 

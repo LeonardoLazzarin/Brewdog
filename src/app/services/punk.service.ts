@@ -13,7 +13,7 @@ import {FilterBeer} from "../modules/beerFilter";
 export class PunkService extends RestService {
 
   constructor(
-    private http: HttpClient,
+    private httpClient: HttpClient,
     private logger: ConsoleLoggerService
   ) {
     super(logger);
@@ -49,7 +49,9 @@ export class PunkService extends RestService {
       return null;
     }
 
-    return this.http
+    // Send request
+    this.logger.info(request.url);
+    return this.httpClient
       .get<Beer[]>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));
   }
@@ -88,9 +90,45 @@ export class PunkService extends RestService {
       return null;
     }
 
-    this.logger.log(request);
-    return this.http
+    // Send request
+    this.logger.log(request.url);
+    return this.httpClient
       .get<Beer[]>(request.url, request.options)
+      .pipe(catchError((error) => super.handleError(error)));
+  }
+
+  /**
+   * Request for get beer info by id
+   * @param id Id of beer
+   */
+  getBeerInfo(id: number): Observable<Beer> | null {
+    // Create request data
+    const request = this.getRestRequest('beers', [id.toString()]);
+    if (request == null) {
+      return null;
+    }
+
+    // Send request
+    this.logger.log(request.url);
+    return this.httpClient
+      .get<Beer>(request.url, request.options)
+      .pipe(catchError((error) => super.handleError(error)));
+  }
+
+  /**
+   * Request for get a random beer info
+   */
+  getRandomBeerInfo(): Observable<Beer> | null {
+    // Create request data
+    const request = this.getRestRequest('beerRandom');
+    if (request == null) {
+      return null;
+    }
+
+    // Send request
+    this.logger.log(request.url);
+    return this.httpClient
+      .get<Beer>(request.url, request.options)
       .pipe(catchError((error) => super.handleError(error)));
   }
 

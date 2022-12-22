@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConsoleLoggerService} from "../../services/console-logger.service";
-import {Subscription} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {Beer} from "../../modules/beer";
 import {PunkService} from "../../services/punk.service";
 import {defaultFilterBeer, FilterBeer} from "../../modules/beerFilter";
@@ -12,10 +12,9 @@ import {defaultFilterBeer, FilterBeer} from "../../modules/beerFilter";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription;
+  subscribe: Subject<void>;
 
   isLoading: boolean;
-
   error: string | null;
 
   beers: Beer[];
@@ -27,7 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private punk: PunkService
   ) {
     this.isLoading = true;
-    this.subscription = new Subscription();
+    this.subscribe = new Subject<void>();
     this.beers = [];
     this.error = null;
     this.page = 1;
@@ -42,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscribe.unsubscribe();
   }
 
   /**
@@ -63,23 +62,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Request for get all beers from api
    */
   getBeersByPage() {
-    // Get the request
+    this.isLoading = true;
+    this.error = null;
+
+    // Submit request
     const request = this.punk.getBeersWithFilter(this.page, this.filter);
     if (request == null) {
       return;
     }
 
-    this.isLoading = true;
-    this.error = null;
-    this.subscription = request.subscribe({
-      next: (res) => {
-        if (Array.isArray(res)){
-          this.beers = res;
-        }
-      },
-      error: (err) => this.showError(err),
-      complete: () => this.isLoading = false
-    })
+    request
+      .pipe(takeUntil(this.subscribe))
+      .subscribe({
+        next: (res) => {
+          if (Array.isArray(res)){
+            this.beers = res;
+          }
+        },
+        error: (err) => this.showError(err),
+        complete: () => this.isLoading = false
+      });
   }
 
   /**

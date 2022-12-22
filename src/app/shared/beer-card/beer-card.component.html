@@ -17,7 +17,7 @@
 
         <!-- Icon and alcohol content -->
         <div class="col-2 col-md-1 d-flex justify-content-end" style="cursor:pointer;" (click)="navigateToBeerDetail()">
-          <p>{{beer.abv}}%</p>
+          <p>{{beer.abv == null ? '' : beer.abv + '%'}}</p>
         </div>
         <div class="col-2 col-md-1 d-flex justify-content-end">
           <i class="bi" [ngClass]="isFavorite ? 'bi-star-fill' : 'bi-star'" (click)="setFavorite()"></i>
