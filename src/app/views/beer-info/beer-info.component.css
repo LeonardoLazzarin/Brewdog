@@ -1,3 +1,9 @@
+@media (max-width: 767px) {
+  .image-container {
+    margin-top: 10px;
+  }
+}
+
 .info-header {
   padding: 10px;
 }
@@ -10,14 +16,14 @@
 
 .image-container {
   position: relative;
-  height: 150px;
+  height: 175px;
 }
 
 .image-container div {
   position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 100px;
+  width: 250px;
+  height: 250px;
+  border-radius: 125px;
   background: rgb(255, 193, 7);
 
   top: 100%;
@@ -28,9 +34,14 @@
 .image-container img {
   position: absolute;
   width: 100px;
-  height: 300px;
+  height: 350px;
   object-fit: fill;
 
   left: 50%;
   transform: translate(-50%, 0);
+}
+
+.body-description {
+  margin-top: 10px;
+  padding: 20px;
 }
