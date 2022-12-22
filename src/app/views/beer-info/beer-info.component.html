@@ -36,7 +36,7 @@
 
     <!--HEADER info with valid beer-->
     <ng-container *ngIf="beer != null">
-      <div class="row justify-content-center">
+      <div class="row justify-content-center beer-info-header">
         <!--Favorite star-->
         <div class="col-md-1 col-2 text-warning">
           <i class="bi favorite-star"
@@ -44,7 +44,7 @@
              (click)="onFavoriteClick()"></i>
         </div>
 
-        <div class="col-md-5 col-8 header-name">
+        <div class="col-md-5 col-10 header-name">
           <h3 class="text-warning">{{ beer.name }}</h3>
           <h5 class="text-secondary">{{ beer.tagline }}</h5>
         </div>
@@ -71,7 +71,8 @@
     <!--Description-->
     <div class="row">
       <div class="col-12 col-md-5 offset-md-2 body-description">
-        <h5>Description</h5>
+        <h4 class="text-secondary">Description</h4>
+        <h6>{{beer.description || ''}}</h6>
       </div>
     </div>
 
