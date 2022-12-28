@@ -22,6 +22,8 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
   random: boolean;
   beer: Beer | null;
 
+  readonly notDefinedValue: string = 'N.D';
+
   constructor(
     private activeRoute: ActivatedRoute,
     private location: Location,
@@ -149,6 +151,17 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
       // Add favorite
       this.punk.addFavorite(this.beer);
     }
+  }
+
+  /**
+   * Check if the food pairing value is valid
+   */
+  validFoodPairing(): boolean {
+    if (this.beer == null) {
+      return false;
+    }
+
+    return this.beer.food_pairing != null && this.beer.food_pairing.length > 0;
   }
 
 }

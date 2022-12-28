@@ -76,6 +76,44 @@
       </div>
     </div>
 
+    <div class="values-container">
+      <h6>
+        ABV: {{ (beer.abv || '') + '%' }} &nbsp; &nbsp;
+        SRM: {{ (beer.srm || '') || notDefinedValue }} &nbsp; &nbsp;
+        IBC: {{ (beer.ebc || '') || notDefinedValue }} &nbsp; &nbsp;
+        IBU: {{ (beer.ibu || '') || notDefinedValue }} &nbsp; &nbsp;
+        PH: {{ (beer.ph || '') || notDefinedValue }}
+      </h6>
+    </div>
+
+    <!--Pairings-->
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2 pairings-container">
+        <h4 class="text-secondary">Pairings</h4>
+
+        <!--Pairing list-->
+        <ng-container *ngIf="!validFoodPairing()">
+          <h6 style="text-align: center">No valid pairings found </h6>
+        </ng-container>
+
+        <ng-container *ngIf="validFoodPairing">
+
+          <div class="row">
+            <ng-container *ngFor="let pair of beer.food_pairing">
+
+              <div class="col-12 col-sm-6 col-md-4 col-xl-3 col pairing-item-container">
+                <div class="pairing-item">
+                  <p>"{{ pair }}"</p>
+                </div>
+              </div>
+
+            </ng-container>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+
   </ng-container>
 
 </ng-container>
