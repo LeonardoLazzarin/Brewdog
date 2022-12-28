@@ -27,9 +27,7 @@ export class NavbarComponent implements OnInit {
       const navigation = event as NavigationStart;
 
       // If the route is random beer hide the button on NavBar
-      this.randomBeerVisible = !(navigation.url === '/beer/random');
-      console.log(navigation.url);
-      console.log(this.randomBeerVisible);
+      this.randomBeerVisible = !(navigation.url === '/random');
     }
   }
 }

@@ -3,7 +3,7 @@ import {PunkService} from "../../services/punk.service";
 import {ConsoleLoggerService} from "../../services/console-logger.service";
 import {Subject, takeUntil} from "rxjs";
 import {Beer} from "../../modules/beer";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 
 @Component({
@@ -25,6 +25,7 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
   readonly notDefinedValue: string = 'N.D';
 
   constructor(
+    private router: Router,
     private activeRoute: ActivatedRoute,
     private location: Location,
     private punk: PunkService,
@@ -55,14 +56,14 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
     this.id = -1;
     this.random = false;
 
-    const beerIdString = this.activeRoute.snapshot.params['id'];
     // Check if is required a random beer
-    if (beerIdString === 'random') {
+    if (this.router.url === '/random') {
       this.random = true;
       return;
     }
 
     // Convert id in number
+    const beerIdString = this.activeRoute.snapshot.params['id'];
     this.id = Number(beerIdString);
     if (isNaN(this.id)) {
       this.logger.error('Wrong id found on route: ' + beerIdString);
@@ -151,6 +152,13 @@ export class BeerInfoComponent implements OnInit, OnDestroy {
       // Add favorite
       this.punk.addFavorite(this.beer);
     }
+  }
+
+  /**
+   * Action called when new random button is clicked
+   */
+  onNewRandomClick() {
+    this.getBeerInfo();
   }
 
   /**

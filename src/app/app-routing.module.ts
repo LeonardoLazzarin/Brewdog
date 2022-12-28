@@ -7,6 +7,7 @@ import {FavoritesComponent} from "./views/favorites/favorites.component";
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'beer/:id', component: BeerInfoComponent },
+  { path: 'random', component: BeerInfoComponent },
   { path: 'favorites', component: FavoritesComponent },
 
   // Redirect all to Dashboard component
