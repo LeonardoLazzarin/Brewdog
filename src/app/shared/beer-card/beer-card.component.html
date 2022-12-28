@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" style="cursor: pointer" (click)="onCardClick()">
   <div class="card-body">
 
     <!-- No beer passed -->
@@ -11,16 +11,17 @@
       <div class="row">
 
         <!-- Name -->
-        <div class="col-8 col-md-10" style="cursor:pointer;" (click)="navigateToBeerDetail()">
+        <div class="col-8 col-md-10">
           <h6>{{beer.name}}</h6>
         </div>
 
         <!-- Icon and alcohol content -->
-        <div class="col-2 col-md-1 d-flex justify-content-end" style="cursor:pointer;" (click)="navigateToBeerDetail()">
+        <div class="col-2 col-md-1 d-flex justify-content-end">
           <p>{{beer.abv == null ? '' : beer.abv + '%'}}</p>
         </div>
         <div class="col-2 col-md-1 d-flex justify-content-end">
-          <i class="bi" [ngClass]="isFavorite ? 'bi-star-fill' : 'bi-star'" (click)="setFavorite()"></i>
+          <i class="bi" [ngClass]="isFavorite ? 'bi-star-fill' : 'bi-star'"
+             (mouseenter)="favoriteOver(true)" (mouseleave)="favoriteOver(false)"></i>
         </div>
 
       </div>

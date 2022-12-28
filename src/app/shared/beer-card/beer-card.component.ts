@@ -20,16 +20,19 @@ export class BeerCardComponent implements OnInit {
   @Output()
   onAddFavorite = new EventEmitter<Beer>();
 
+  isFavoriteSelected: boolean;
+
   constructor(
     private router: Router,
     private punk: PunkService,
     private logger: ConsoleLoggerService
   ) {
     this.beer = null;
+    this.isFavoriteSelected = false;
   }
 
   ngOnInit() {
-
+    this.isFavoriteSelected = false;
   }
 
   /**
@@ -40,6 +43,21 @@ export class BeerCardComponent implements OnInit {
       return false;
     }
     return this.punk.isFavorite(this.beer);
+  }
+
+  /**
+   * Action called when the card is clicked
+   */
+  onCardClick(){
+    if (this.beer == null) {
+      return;
+    }
+
+    if (this.isFavoriteSelected) {
+      this.setFavorite();
+    } else {
+      this.navigateToBeerDetail();
+    }
   }
 
   /**
@@ -69,6 +87,14 @@ export class BeerCardComponent implements OnInit {
         this.logger.error('Invalid url');
       }
     });
+  }
+
+  /**
+   * Action called when mouse enter and leave on favorite star
+   * @param selected Indicate if is on item
+   */
+  favoriteOver(selected: boolean) {
+    this.isFavoriteSelected = selected;
   }
 
 }
