@@ -18,14 +18,15 @@
 
     <!-- Alcohol content -->
     <div class="col-12 col-md-6 col-xl-4">
-      <label for="alcoholContentFrom" class="col-form-label-sm">Alcohol content (From -> To)</label>
       <div class="row">
         <div class="col">
+          <label for="alcoholContentFrom" class="col-form-label-sm">Alcohol content (From)</label>
           <input type="number" class="form-control" id="alcoholContentFrom" placeholder="From" [(ngModel)]="filter.alcohol.from"
                   (keypress)="onlyNumberInput($event)">
         </div>
 
         <div class="col">
+          <label for="alcoholContentFrom" class="col-form-label-sm">Alcohol content (To)</label>
           <input type="number" class="form-control" id="alcoholContentTo" placeholder="To" [(ngModel)]="filter.alcohol.to"
                  (keypress)="onlyNumberInput($event)">
         </div>
